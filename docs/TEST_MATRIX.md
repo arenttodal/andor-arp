@@ -5,7 +5,7 @@ means no claim.** Updated 20 November 2026.
 
 ## 1. Headless (this repository's ctest; CI on Ubuntu and macOS)
 
-| Area | Tests | Result (Linux, GCC 13, 20 Nov 2026) |
+| Area | Tests | Result (Linux GCC 13 and macOS 15 CI, 20 Nov 2026) |
 |---|---|---|
 | Core: the 18 styles' frozen events | `arp-core-regression` (OSP's golden, standalone) | pass |
 | Core: STRUM, capture, factory patterns, codec, fixtures written by ANDOR OSP | `arp-core-unit` | pass |
@@ -21,8 +21,9 @@ means no claim.** Updated 20 November 2026.
 | State blob (checksum, float-exact, refusals) | `[blob]` | pass |
 | Link: atoms, reconciliation, pairing, reopen, no Master, duplicate Rack, loss, removal | `[link]` | pass |
 | Max scheduling adapter: continuity, jumps | `[max-scheduling]` | pass |
+| Raw MIDI parsing (running status, real-time, SysEx); triple buffer across threads; SPSC queue | `[glue]` | pass |
 | Scheduler model: 11 scenarios, no missing/extra/hanging notes, ≤ 2 vectors | `[timing]` | pass (`docs/results/timing-simulation.md`) |
-| `andor.arp.engine` compiles against the Max SDK | Linux object (LINUX_VERSION headers) | pass; macOS .mxo: CI |
+| `andor.arp.engine` compiles against the Max SDK | Linux object (LINUX_VERSION headers); macOS 15 universal .mxo (CI run 1) | pass (built, never loaded in Max) |
 
 In ANDOR OSP (branch `claude/andor-arp-spec-xy4umx`): full ctest, `[arp-codec-compat]`, OSP's ARP
 suites (2.4 M assertions) — pass; ANDOR ANALOG `analog_dsp_tests` + arp-core tests against it — pass.
