@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # Cycling '74 max-sdk-base (MIT licence), pinned. Update deliberately, with a note in docs/STATUS.md.
+  MAX_SDK_REPO: https://github.com/Cycling74/max-sdk-base.git
+  MAX_SDK_COMMIT: c03a2922a2a8ff149165a1e2ea134e9321d6e202
+
+jobs:
+  build-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest      # core + product tests; the external compiled (not linked: no Max on Linux)
+          - os: macos-15           # the same tests, and the universal andor.arp.engine.mxo
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true         # osp/: ANDOR OSP at the pinned commit (andor_arp_core)
+
+      - name: Max SDK
+        run: |
+          git init max-sdk-base
+          git -C max-sdk-base remote add origin "$MAX_SDK_REPO"
+          git -C max-sdk-base fetch --depth 1 origin "$MAX_SDK_COMMIT"
+          git -C max-sdk-base checkout --quiet FETCH_HEAD
+
+      - name: Tools
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then brew install ninja; else sudo apt-get update && sudo apt-get install -y ninja-build; fi
+
+      - name: Configure
+        run: >
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          -DANDOR_ARP_BUILD_MAX_EXTERNAL=ON -DANDOR_ARP_MAX_SDK_DIR=$PWD/max-sdk-base
+          ${{ runner.os == 'macOS' && '"-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"' || '' }}
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test (core golden, codec fixtures, lanes, link, timing model)
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Timing report (scheduler model)
+        run: ./build/andor-arp-timing-report | tee timing-report.md
+
+      - name: External (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          MXO=$(find build -name 'andor.arp.engine.mxo' -type d | head -1)
+          test -n "$MXO"
+          lipo -info "$MXO/Contents/MacOS/andor.arp.engine"
+          codesign -s - -f "$MXO"   # ad hoc only: the release signs with the Developer ID (docs/RELEASE_RUNBOOK.md)
+          ditto -c -k --keepParent "$MXO" andor.arp.engine-unsigned.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: andor-arp-${{ matrix.os }}
+          path: |
+            timing-report.md
+            andor.arp.engine-unsigned.zip
+          if-no-files-found: ignore

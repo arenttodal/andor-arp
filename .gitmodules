@@ -1,0 +1,5 @@
+[submodule "osp"]
+	path = osp
+	url = https://github.com/arenttodal/OSP
+	branch = claude/andor-arp-spec-xy4umx
+	shallow = true

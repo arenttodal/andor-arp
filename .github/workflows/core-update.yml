@@ -1,0 +1,53 @@
+name: Core update check
+
+# Weekly: is there a newer ANDOR OSP commit on the branch this repository follows? If so, open a
+# dependency-update pull request. Nothing is released automatically: the PR runs CI (core golden,
+# codec fixtures, lanes, link, timing model, external build) and needs the owner's review.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  OSP_BRANCH: claude/andor-arp-spec-xy4umx   # the branch carrying andor_arp_core until it reaches OSP's main line
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Compare the pinned core with the branch head
+        id: compare
+        run: |
+          pinned=$(git -C osp rev-parse HEAD)
+          git -C osp fetch --quiet origin "$OSP_BRANCH"
+          head=$(git -C osp rev-parse FETCH_HEAD)
+          echo "pinned=$pinned" >> "$GITHUB_OUTPUT"
+          echo "head=$head" >> "$GITHUB_OUTPUT"
+          if [ "$pinned" = "$head" ]; then echo "update=false" >> "$GITHUB_OUTPUT"; else echo "update=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Open a dependency-update pull request
+        if: steps.compare.outputs.update == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ steps.compare.outputs.head }}
+          PINNED_SHA: ${{ steps.compare.outputs.pinned }}
+        run: |
+          branch="core-update/${HEAD_SHA:0:12}"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then echo "already proposed"; exit 0; fi
+          git -C osp checkout --quiet "$HEAD_SHA"
+          git config user.name "andor-arp core update"
+          git config user.email "core-update@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add osp
+          log=$(git -C osp log --oneline "$PINNED_SHA..$HEAD_SHA" | head -50)
+          git commit -m "Update andor_arp_core (OSP ${HEAD_SHA:0:12})" -m "$log"
+          git push origin "$branch"
+          gh pr create --title "Update andor_arp_core to OSP ${HEAD_SHA:0:12}" \
+            --body "$(printf 'OSP %s..%s on %s.\n\nCI must pass: core unit and 18-style golden, codec fixtures, lanes, link, timing model, external build. Release only after review.\n\n```\n%s\n```' "${PINNED_SHA:0:12}" "${HEAD_SHA:0:12}" "$OSP_BRANCH" "$log")"

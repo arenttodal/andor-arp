@@ -1,0 +1,5 @@
+/build*/
+/max-sdk-base/
+*.mxo/
+*.mxe64
+.DS_Store

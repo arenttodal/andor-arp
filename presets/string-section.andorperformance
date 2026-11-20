@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "andor.arp-performance",
+  "name": "String Section",
+  "lanes": [
+    {
+      "name": "PIZZ",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 2,
+      "rate": 1,
+      "gate": 0.35,
+      "swing": 0.0,
+      "octaves": 2,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 43,
+      "registerHigh": 79,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "2026"
+    },
+    {
+      "name": "PAD",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 5,
+      "rate": 0,
+      "gate": 1.0,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": true,
+        "direction": 0,
+        "sync": false,
+        "ms": 60.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "14180627209301023036"
+    },
+    {
+      "name": "LINE",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 4,
+      "rate": 4,
+      "gate": 0.9,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 12,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "369692985803622169"
+    }
+  ]
+}

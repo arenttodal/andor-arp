@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "kind": "andor.arp-performance",
+  "name": "Keys and Bells",
+  "lanes": [
+    {
+      "name": "STRUM",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 5,
+      "rate": 1,
+      "gate": 0.7,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": true,
+        "direction": 3,
+        "sync": true,
+        "ms": 20.0,
+        "quarters": 0.25
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "2026"
+    },
+    {
+      "name": "GALLOP",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 0,
+      "rate": 2,
+      "gate": 0.6,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": true,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "14180627209301023036",
+      "customPattern": {
+        "schemaVersion": 1,
+        "kind": "andor.arp-pattern",
+        "id": "factory.gallop",
+        "name": "Gallop",
+        "description": "Two pitches in a long-short-short rhythm",
+        "factory": true,
+        "pattern": {
+          "mapping": "contour",
+          "maxRank": 1,
+          "events": [
+            [0, 960],
+            [1, 480],
+            [1, 480],
+            [0, 960],
+            [1, 480],
+            [1, 480]
+          ]
+        },
+        "interpretation": {
+          "timing": "rhythm",
+          "quantumTicks": 240,
+          "stepQuarters": 0.25,
+          "lengthQuarters": 0.0,
+          "chord": "highest",
+          "mapping": "contour"
+        },
+        "capture": {
+          "bpm": 120.0,
+          "notes": []
+        }
+      }
+    },
+    {
+      "name": "BELLS",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 12,
+      "rate": 1,
+      "gate": 0.4,
+      "swing": 0.0,
+      "octaves": 2,
+      "velocity": 1.0,
+      "custom": true,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 24,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "369692985803622169",
+      "customPattern": {
+        "schemaVersion": 1,
+        "kind": "andor.arp-pattern",
+        "id": "factory.sparse-rests",
+        "name": "Sparse",
+        "description": "Notes and silences: rests keep time without repeating",
+        "factory": true,
+        "pattern": {
+          "mapping": "contour",
+          "maxRank": 3,
+          "events": [
+            [0, 960],
+            [-1, 960],
+            [2, 480],
+            [1, 480],
+            [-1, 960],
+            [3, 1920],
+            [-1, 960]
+          ]
+        },
+        "interpretation": {
+          "timing": "rhythm",
+          "quantumTicks": 240,
+          "stepQuarters": 0.25,
+          "lengthQuarters": 0.0,
+          "chord": "highest",
+          "mapping": "contour"
+        },
+        "capture": {
+          "bpm": 120.0,
+          "notes": []
+        }
+      }
+    }
+  ]
+}

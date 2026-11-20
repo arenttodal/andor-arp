@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "kind": "andor.arp-performance",
+  "name": "Pulse Trio",
+  "lanes": [
+    {
+      "name": "SEQ",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 0,
+      "rate": 2,
+      "gate": 0.5,
+      "swing": 0.2,
+      "octaves": 2,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "2026"
+    },
+    {
+      "name": "TRIPLETS",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 11,
+      "rate": 8,
+      "gate": 0.6,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": false,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 0,
+      "registerHigh": 127,
+      "transpose": 0,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "14180627209301023036"
+    },
+    {
+      "name": "BASS",
+      "enabled": true,
+      "revision": "1",
+      "pattern": 0,
+      "rate": 1,
+      "gate": 0.8,
+      "swing": 0.0,
+      "octaves": 1,
+      "velocity": 1.0,
+      "custom": true,
+      "strum": {
+        "on": false,
+        "direction": 0,
+        "sync": false,
+        "ms": 20.0,
+        "quarters": 0.125
+      },
+      "registerLow": 28,
+      "registerHigh": 55,
+      "transpose": -24,
+      "channel": 1,
+      "passThrough": false,
+      "seed": "369692985803622169",
+      "customPattern": {
+        "schemaVersion": 1,
+        "kind": "andor.arp-pattern",
+        "id": "factory.pedal-bass",
+        "name": "Pedal Bass",
+        "description": "A low anchor under a moving line",
+        "factory": true,
+        "pattern": {
+          "mapping": "contour",
+          "maxRank": 4,
+          "events": [
+            [0, 960],
+            [2, 960],
+            [0, 960],
+            [3, 960],
+            [0, 960],
+            [4, 960],
+            [0, 960],
+            [2, 960]
+          ]
+        },
+        "interpretation": {
+          "timing": "rhythm",
+          "quantumTicks": 240,
+          "stepQuarters": 0.25,
+          "lengthQuarters": 0.0,
+          "chord": "highest",
+          "mapping": "contour"
+        },
+        "capture": {
+          "bpm": 120.0,
+          "notes": []
+        }
+      }
+    }
+  ]
+}
