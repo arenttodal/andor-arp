@@ -12,7 +12,8 @@ Done (headless, tested):
 - `max/external/andor.arp.engine.cpp`: compiles against max-sdk-base (pinned in CI); never run in Max.
 - `max/shared/andor-arp-pairing.js`: written; never run in Live.
 - Three example performances (`presets/`).
-- CI: Ubuntu + macOS (tests, timing report, unsigned universal .mxo artifact); weekly core-update PR.
+- CI: Ubuntu + macOS (tests, timing report, unsigned universal .mxo artifact) — green; weekly core-update PR.
+- OSP work branch: Linux ctest 8/8; macOS CI (plugin build, full ctest, AU validation) green.
 
 Not done: everything in Live (devices, Rack, Set, timing measurement, persistence, pairing), the
 Master's UI, Capture's preview/editor in Max, Windows, signing/notarisation, the JUCE host.
